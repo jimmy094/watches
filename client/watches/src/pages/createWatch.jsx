@@ -1,4 +1,5 @@
 import { useState } from "react";
+import axios from 'axios'
 
 export const CreateWatch = () => {
     const [ watch, setWatch ] = useState({
@@ -17,6 +18,16 @@ export const CreateWatch = () => {
 
     const addDesc = () => {
         setWatch({...watch, description: [...watch.description, ""] })
+    }
+
+    const onSubmit = async (event) => {
+        event.preventDefault();
+        try {
+            await axios.post("http://localhost:3001/watches", watch);
+            alert("Watch created!")
+        } catch (error) {
+            console.log(error)
+        }
     }
 
 
@@ -46,6 +57,8 @@ export const CreateWatch = () => {
 
             <label htmlFor="price">Price</label>
             <input type="text" id="year" name="year" />
+
+            <button onSubmit={onSubmit} type="submit">Create your watch</button>
         </form>
     
     
