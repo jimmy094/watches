@@ -36,18 +36,18 @@ router.put("/", async(req, res) => {
 }
 });
 
-router.get("/savedWatches/ids", async(req, res) => {
+router.get("/savedWatches/ids/:userID", async(req, res) => {
     try {
-        const user = await UserModel.findById(req.body.userID)
+        const user = await UserModel.findById(req.params.userID)
         res.json({ savedWatches: user?.savedWatches})
     } catch (error) {
         res.json(error)
     }
 });
 
-router.get("/savedWatches", async(req, res) => {
+router.get("/savedWatches/:userID", async(req, res) => {
     try {
-        const user = await UserModel.findById(req.body.userID);
+        const user = await UserModel.findById(req.params.userID);
         const savedWatches = await WatchModel.find({
             _id: { $in: user.savedWatches },
         });
@@ -61,3 +61,4 @@ router.get("/savedWatches", async(req, res) => {
         
 
 export { router as watchRouter };
+
